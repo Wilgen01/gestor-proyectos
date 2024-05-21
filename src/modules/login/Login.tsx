@@ -37,7 +37,7 @@ function Login() {
             })
 
             if (response.status !== 200) {
-                alert('Error al iniciar sesión');
+                alert('Credenciales incorrectas');
                 return;
             }
 
@@ -45,7 +45,7 @@ function Login() {
             localStorage.setItem('token', data.token);
             navigate('/dashboard');
         } catch (error) {
-            alert('Error al iniciar sesión');
+            alert('Ocurrió un error al iniciar sesión, intenta de nuevo');
         }
 
 
