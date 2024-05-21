@@ -1,14 +1,22 @@
+import { RouterProvider, createBrowserRouter } from "react-router-dom"
 import DashBoard from "./modules/dashboard/DashBoard"
 import Login from "./modules/login/Login"
-import NavBar from "./modules/shared/components/navbar/NavBar"
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Login />,
+  },
+  {
+    path: "/dashboard",
+    element: <DashBoard />,
+  }
+
+])
 
 function App() {
 
-  return (
-    <>
-      <Login />
-    </>
-  )
+  return (<RouterProvider router={router}/>)
 }
 
 export default App
