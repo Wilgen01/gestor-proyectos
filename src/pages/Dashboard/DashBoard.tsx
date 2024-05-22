@@ -1,3 +1,4 @@
+import NavBar from "../../components/NavBar/NavBar";
 import ProjectCard from "./ProjectCard";
 
 function DashBoard() {
@@ -20,20 +21,23 @@ function DashBoard() {
     ]
 
     return (
-        <main className="container">
-            <section className="d-flex justify-content-between mt-5 mb-5">
-                <h1 className="h2 m-0">Bienvenido Wilgen García</h1>
-                <button type="button" className="btn btn-primary">Crear nuevo Proyecto</button>
-            </section>
+        <>
+            <NavBar />
+            <main className="container">
+                <section className="d-flex justify-content-between mt-5 mb-5">
+                    <h1 className="h2 m-0">Bienvenido Wilgen García</h1>
+                    <button type="button" className="btn btn-primary">Crear nuevo Proyecto</button>
+                </section>
 
-            <div className="row cursor-pointer">
-                {projects.map(project => (
-                    <div key={project.id} className="col-sm-6 mb-sm-0">
-                        <ProjectCard title={project.title} description={project.description} />
-                    </div>
-                ))}
-            </div>
-        </main>
+                <div className="row cursor-pointer">
+                    {projects.map(project => (
+                        <div key={project.id} className="col-sm-6 mb-sm-0">
+                            <ProjectCard title={project.title} description={project.description} />
+                        </div>
+                    ))}
+                </div>
+            </main>
+        </>
     );
 }
 
