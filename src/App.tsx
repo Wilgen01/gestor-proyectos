@@ -1,7 +1,7 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom"
-import DashBoard from "./modules/dashboard/DashBoard"
-import Login from "./modules/login/Login"
-import PrivateRoute from "./modules/login/PrivateRoute"
+import DashBoard from "./pages/Dashboard/DashBoard"
+import Login from "./pages/Login/Login"
+import PrivateRoute from "./components/PrivateRoute/PrivateRoute"
 
 const router = createBrowserRouter([
   {
