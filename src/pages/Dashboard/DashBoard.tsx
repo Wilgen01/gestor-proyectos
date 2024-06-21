@@ -1,28 +1,19 @@
-import { useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import BasicModal from "../../components/Modal/BasicModal";
 import NavBar from "../../components/NavBar/NavBar";
 import ProjectCard from "./ProjectCard";
+import CreateProject from "./CreateProject";
+import { useFetch } from "../../core/hooks/useFetch";
+import { getToken } from "../../core/utilities/ManageSession";
+import { Project } from "../../core/models/projectModel";
+import { fetchData } from "../../core/utilities/FetchData";
+
+
+const baseUrl = import.meta.env.VITE_BASE_API_URL;
 
 function DashBoard() {
-    const projects = [
-        {
-            id: 1,
-            title: 'PTC-001: Seguimiento Logístico',
-            description: 'Proyecto para seguimiento de envíos'
-        },
-        {
-            id: 2,
-            title: 'PTC-002: Sistema de Facturación',
-            description: 'Proyecto para facturación de servicios'
-        },
-        {
-            id: 3,
-            title: 'PTC-003: Bot de Whatsapp con IA',
-            description: 'Proyecto para automatizar respuestas'
-        }
-    ]
-
     const [showModal, setShowModal] = useState(false);
+    const { data, error, loading, refetch } = useFetch<Project[]>(`${baseUrl}/api/v1/projects`, getToken());
 
     const handleOpenModal = () => {
         setShowModal(true);
@@ -32,11 +23,16 @@ function DashBoard() {
         setShowModal(false);
     };
 
+    const handleSuccess = () => {
+        refetch();
+        handleCloseModal();
+    }
+
     return (
         <>
             <NavBar />
-            <BasicModal show={showModal} handleClose={handleCloseModal} title="Titulo">
-                <p>Contenido del modal</p>
+            <BasicModal show={showModal} handleClose={handleCloseModal} title="Crear nuevo Proyecto">
+                <CreateProject handleCancel={handleCloseModal} handleSuccess={handleSuccess} />;
             </BasicModal>
             <main className="container">
                 <section className="d-flex justify-content-between mt-5 mb-5">
@@ -45,9 +41,9 @@ function DashBoard() {
                 </section>
 
                 <div className="row cursor-pointer">
-                    {projects.map(project => (
+                    {data?.map(project => (
                         <div key={project.id} className="col-sm-6 mb-sm-0">
-                            <ProjectCard title={project.title} description={project.description} />
+                            <ProjectCard title={project.name} description={project.description} />
                         </div>
                     ))}
                 </div>
