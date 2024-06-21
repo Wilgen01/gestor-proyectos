@@ -1,4 +1,4 @@
-import { Suspense, useEffect, useState } from "react";
+import { useState } from "react";
 import BasicModal from "../../components/Modal/BasicModal";
 import NavBar from "../../components/NavBar/NavBar";
 import ProjectCard from "./ProjectCard";
@@ -6,14 +6,13 @@ import CreateProject from "./CreateProject";
 import { useFetch } from "../../core/hooks/useFetch";
 import { getToken } from "../../core/utilities/ManageSession";
 import { Project } from "../../core/models/projectModel";
-import { fetchData } from "../../core/utilities/FetchData";
 
 
 const baseUrl = import.meta.env.VITE_BASE_API_URL;
 
 function DashBoard() {
     const [showModal, setShowModal] = useState(false);
-    const { data, error, loading, refetch } = useFetch<Project[]>(`${baseUrl}/api/v1/projects`, getToken());
+    const { data, refetch } = useFetch<Project[]>(`${baseUrl}/api/v1/projects`, getToken());
 
     const handleOpenModal = () => {
         setShowModal(true);
