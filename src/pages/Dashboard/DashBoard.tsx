@@ -27,6 +27,23 @@ function DashBoard() {
         handleCloseModal();
     }
 
+    const handleDelete = async (id?: number) => {
+        console.log('Eliminar proyecto con id:', id);
+        const response = await fetch(`${baseUrl}/api/v1/projects/${id}`, {
+            method: 'DELETE',
+            headers: {
+                authorization: `Bearer ${getToken()}`
+            }
+        });
+
+        if (response.status !== 200 && response.status !== 204) {
+            alert('Ocurrió un error al eliminar el proyecto');
+            return;
+        }
+
+        refetch();
+    }
+
     return (
         <>
             <NavBar />
@@ -42,7 +59,7 @@ function DashBoard() {
                 <div className="row cursor-pointer">
                     {data?.map(project => (
                         <div key={project.id} className="col-sm-6 mb-sm-0">
-                            <ProjectCard title={project.name} description={project.description} />
+                            <ProjectCard title={project.name} description={project.description} handleDelete={() => handleDelete(project.id)} />
                         </div>
                     ))}
                 </div>
